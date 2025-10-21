@@ -21,39 +21,15 @@ int main()
     float* xPoints = nullptr;
     float* yPoints = nullptr;
     short len = 0;
-    /*int lenObstaclePoints = 51;
-    int lenObs = 2 * lenObstaclePoints;*/
     unsigned short lenObs = 0;
     unsigned short TotLenObs = 0;
     unsigned short xMax = 300;
     uint8_t yMax = 200;
-    //bool grid[150][100];
     unsigned short* obstacles = nullptr;
     unsigned short* TotObs = nullptr;
     unsigned short* tempObs = nullptr;
     uint8_t xl, yl, step = 2, tol = 1, Rsize = 20;
     // 1 -> every 1 cm, 5 -> every 5 cm, 10 -> every 10cm 
-
-    bool a[10], b[10];
-
-    /*int x;
-    int y;
-
-    while (1) {
-        cout << "x -> ";
-        cin >> x;
-        cout << endl << "step -> ";
-        cin >> y;
-        cout << endl;
-
-        cout << "x%step -> " << x % y << endl;
-        x = x + y - x % y;
-        cout << "xnew -> " << x << endl;
-    }*/
-    
-
-    cout << "Memory of int len -> " << sizeof(len) << endl;
-    cout << "Memory of size_t -> " << sizeof(size_t) << endl;
 
 
     short obsStart[20] = { 7, 40, 77, 25, 223, 25, 293, 40, 7, 133, 110, 95, 190, 95, 293, 133, 81, 173, 219, 173 };
@@ -111,13 +87,8 @@ int main()
     cout << endl << "Small areas" << endl;
     for (int i = 0; i < TotLenObs; i += 2) {
         if (TotLenObs - i == 12) {
-            //lol = 0;
         }
-        /*if (lol%8 == 0) {
-            cout << endl;
-        }*/
         cout << TotObs[i] << ", " << TotObs[i + 1] << ", ";
-        //lol++;
     }
 
     cout << endl << endl;
@@ -170,8 +141,6 @@ int main()
     // Tribunes
     xl = 20 + Rsize + tol;
     yl = 5 + Rsize + tol;
-    //stocks[5] = 0;
-    // k == 0 || k == 3 || k == 4 || k == 7
     for (unsigned short i = 0; i < 20; i += 2) {
         if (stocks[k] == 2) {
             lenObs = tribObstacles(&obstacles, obsStart[i], obsStart[i + 1], xMax, yMax, yl, xl); // vertical
@@ -283,38 +252,23 @@ int main()
 
     cout << endl << endl << "END OBSTACLES CREATION" << endl << endl;
 
-    //int lol = 0;
     for (int i = 0; i < TotLenObs; i += 2) {
         if (TotLenObs - i == 12) {
-            //lol = 0;
         }
-        /*if (lol%8 == 0) {
-            cout << endl;
-        }*/
         cout << TotObs[i] << ", " << TotObs[i + 1] << ", ";
-        //lol++;
     }
 
     cout << endl;
 
     cout << "Starting" << endl;
-
-    /*TotObs = (unsigned short*)malloc(sizeof(unsigned short) * 2);
-    TotLenObs = 2;
-    TotObs[0] = 10;
-    TotObs[1] = 10;*/
-
     cout << "Number of Obstacles -> " << TotLenObs << endl;
     cout << "Memory of Obstacles with int -> " << TotLenObs * sizeof(int) << endl;
     cout << "Memory of Obstacles witn short -> " << TotLenObs * sizeof(unsigned short) << endl;
 
     bool NoStar = false;
-    Astar_HR shit(0, 0, 150, 200, xMax, yMax, TotObs, TotLenObs, true, step);
-    cout << "Memory of shit ->" << sizeof(shit) << endl;
+    Astar_HR astar(0, 0, 150, 200, xMax, yMax, TotObs, TotLenObs, true, step);
 
-    len = shit.pathGeneration();
-
-    cout << "Memory of shit ->" << sizeof(shit) << endl;
+    len = astar.pathGeneration();
 
     if (len == -1) {
         cout << "Cannot run Astar....No path to goal" << endl;
@@ -328,10 +282,8 @@ int main()
         xPoints = (float*)malloc(sizeof(float) * len);
         yPoints = (float*)malloc(sizeof(float) * len);
 
-        shit.getPath(xPoints, yPoints);
+        astar.getPath(xPoints, yPoints);
 
-
-        cout << "Memory of shit ->" << sizeof(shit) << endl;
 
         cout << "---Astar points---" << endl;
         for (unsigned short i = 0; i < len; i++) {
@@ -383,27 +335,10 @@ unsigned short tribObstacles(unsigned short** obstacles, short x, short y, unsig
     short obLen = 4, xtl, ytl, xtr, ybr;
     unsigned short obs[4];
 
-
-
-    //if (horizontal) {
-    /*xtl = xbl = constrain(x - xl, 0, xMax);
-    xtr = xbr = constrain(x + xl, 0, xMax);
-    ytr = ytl = constrain(y + yl, 0, yMax);
-    ybr = ybl = constrain(y - yl, 0, yMax);*/
-    //}
-    /*else {
-        xtl = xbl = constrain(x - yl, 0, xMax);
-        xtr = xbr = constrain(x + yl, 0, xMax);
-        ytr = ytl = constrain(y + xl, 0, yMax);
-        ybr = ybl = constrain(y - xl, 0, yMax);
-    }*/
-
     xtl = constrain(x - xl, 0, xMax);
     xtr = constrain(x + xl, 0, xMax);
     ytl = constrain(y + yl, 0, yMax);
     ybr = constrain(y - yl, 0, yMax);
-    //cout << xtl << ", " << ytl << ", " << xtr << ", " << ytl << ", " << xtl << ", " << ybr << ", " << xtr << ", " << ybr << ", ";
-
 
     obs[0] = xtl;
     obs[1] = ytl;
@@ -451,12 +386,6 @@ unsigned short stageOb(unsigned short** obstacles, bool team, unsigned short xMa
     obs[4] = xtm;
     obs[5] = ytm;
 
-    /*cout << endl;
-    for (int i = 0; i < 6; i++) {
-        cout << obs[i] << ", ";
-    }*/
-
-
     *obstacles = (unsigned short*)malloc(obLen * sizeof(unsigned short));
     if (*obstacles == nullptr) {
         cout << "Memory allocation failed!" << endl;
@@ -473,23 +402,11 @@ unsigned short stageOb(unsigned short** obstacles, bool team, unsigned short xMa
 unsigned short enemyOb(unsigned short** obstacles, short x, short y, unsigned short xMax, unsigned short yMax, uint8_t xl, uint8_t yl) {
     short obLen = 4, xtl, ytl, xtr, ybr;
     unsigned short obs[4];
-
-    /*xtl = xbl = x - xl;
-    xtr = xbr = x + xl;
-    ytr = ytl = y + yl;
-    ybr = ybl = y - yl;
-    cout << xtl << ", " << ytl << ", " << xtr << ", " << ytr << ", " << xbl << ", " << ybl << ", " << xbr << ", " << ybr << endl;*/
-
-    /*xtl = xbl = constrain(x - xl, 0, xMax);
-    xtr = xbr = constrain(x + xl, 0, xMax);
-    ytr = ytl = constrain(y + yl, 0, yMax);
-    ybr = ybl = constrain(y - yl, 0, yMax);*/
     
     xtl = constrain(x - xl, 0, xMax);
     xtr = constrain(x + xl, 0, xMax);
     ytl = constrain(y + yl, 0, yMax);
     ybr = constrain(y - yl, 0, yMax);
-    //cout << xtl << ", " << ytl << ", " << xtr << ", " << ytl << ", " << xtl << ", " << ybr << ", " << xtr << ", " << ybr << ", ";
 
 
     obs[0] = xtl;
@@ -519,5 +436,6 @@ short constrain(short num, short downLimit, short upLimit) {
     else {
         return num;
     }
+
 
 }
