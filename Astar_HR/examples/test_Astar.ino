@@ -8,13 +8,10 @@
 float* xPoints = nullptr;
 float* yPoints = nullptr;
 unsigned short len = 0;
-/*int lenObstaclePoints = 51;
-int lenObs = 2 * lenObstaclePoints;*/
 unsigned short lenObs = 0;
 unsigned short TotLenObs = 0;
 unsigned short xMax = 300;
 uint8_t yMax = 200;
-//bool grid[150][100];
 unsigned short* obstacles = nullptr;
 unsigned short* TotObs = nullptr;
 unsigned short* tempObs = nullptr;
@@ -36,10 +33,6 @@ void PathFind(void* pvParameters) {
     Serial.print("Count=");
     Serial.println(count);
     if(count == 2){
-      // TotObs = (unsigned short*)malloc(sizeof(unsigned short) * 2);
-      // TotLenObs = 2;
-      // TotObs[0] = 10;
-      // TotObs[1] = 10; 
       Serial.println("---Astar__Start---");
       time1 = millis();
       Astar_HR shit(122, 22, 280, 180, xMax, yMax, TotObs, TotLenObs, true, step);
@@ -50,10 +43,6 @@ void PathFind(void* pvParameters) {
       time2 = millis();
 
       for(int i=0; i<len; i++){
-        // Serial.print("X:");
-        // Serial.print(xPoints[i]);
-        // Serial.print("  , Y:");
-        // Serial.println(yPoints[i]);
         Serial.print(xPoints[i]);
         Serial.print(", ");
         Serial.print(yPoints[i]);
@@ -98,7 +87,6 @@ void setup() {
 
       tempObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
       if (tempObs == nullptr) {
-          // cout << "Memory allocation failed!" << endl;
           exit(1);
       }
 
@@ -111,7 +99,6 @@ void setup() {
 
       TotObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
       if (TotObs == nullptr) {
-          // cout << "Memory allocation failed!" << endl;
           exit(1);
       }
 
@@ -133,7 +120,6 @@ void setup() {
 
   tempObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
   if (tempObs == nullptr) {
-      // cout << "Memory allocation failed!" << endl;
       exit(1);
   }
 
@@ -146,7 +132,6 @@ void setup() {
 
   TotObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
   if (TotObs == nullptr) {
-      // cout << "Memory allocation failed!" << endl;
       exit(1);
   }
 
@@ -165,7 +150,6 @@ void setup() {
 
   tempObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
   if (tempObs == nullptr) {
-      // cout << "Memory allocation failed!" << endl;
       exit(1);
   }
 
@@ -178,7 +162,6 @@ void setup() {
 
   TotObs = (unsigned short*)malloc(TotLenObs * sizeof(unsigned short));
   if (TotObs == nullptr) {
-      // cout << "Memory allocation failed!" << endl;
       exit(1);
   }
 
@@ -191,7 +174,6 @@ void setup() {
   free(tempObs);
 
   for (int i = 0; i < TotLenObs; i += 2) {
-      // cout << TotObs[i] << ", " << TotObs[i + 1] << ", ";
       Serial.print(TotObs[i]);
       Serial.print(", ");
       Serial.print(TotObs[i+1]);
@@ -229,7 +211,6 @@ unsigned short tribObstacles(unsigned short** obstacles, short x, short y, unsig
 
     *obstacles = (unsigned short*)malloc(obLen * sizeof(unsigned short));
     if (*obstacles == nullptr) {
-        // cout << "Memory allocation failed!" << endl;
         exit(1);
     }
 
@@ -270,7 +251,6 @@ unsigned short stageOb(unsigned short** obstacles, bool team, unsigned short xMa
 
     *obstacles = (unsigned short*)malloc(obLen * sizeof(unsigned short));
     if (*obstacles == nullptr) {
-        // cout << "Memory allocation failed!" << endl;
         exit(1);
     }
 
@@ -297,7 +277,6 @@ unsigned short enemyOb(unsigned short** obstacles, short x, short y, unsigned sh
 
     *obstacles = (unsigned short*)malloc(obLen * sizeof(unsigned short));
     if (*obstacles == nullptr) {
-        // cout << "Memory allocation failed!" << endl;
         exit(1);
     }
 
@@ -305,18 +284,4 @@ unsigned short enemyOb(unsigned short** obstacles, short x, short y, unsigned sh
 
     return obLen;
 }
-
-
-// short constrain(short num, short downLimit, short upLimit) {
-//     if (num > upLimit) {
-//         return upLimit;
-//     }
-//     else if (num < downLimit) {
-//         return downLimit;
-//     }
-//     else {
-//         return num;
-//     }
-
-// }
 
