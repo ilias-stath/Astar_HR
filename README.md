@@ -1,3 +1,7 @@
+# ------------UNDER CONSTRATION. DO NOT USE YET------------
+
+
+
 # Astar
 ## Overview
 This project was created for the Eurobot 2025 contest and it is an implementation of the Astar pathfinding algorithm. In the context of the contest it was used to help the robot navigate the playable area when it encountered
